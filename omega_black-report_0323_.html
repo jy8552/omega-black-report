@@ -1,0 +1,1911 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OMEGA Black 성적표 샘플</title>
+  <style>
+    :root{
+      --bg:#f5f3ee;
+      --surface:#ffffff;
+      --surface-2:#fcfaf6;
+      --surface-muted:#f6f1e7;
+      --border:#e7dfd2;
+      --border-strong:#ead9b7;
+      --text:#1f2430;
+      --text-sub:#6f7782;
+      --gold:#c8a96b;
+      --gold-strong:#b99043;
+      --gold-dark:#8d6b32;
+      --shadow:0 14px 32px rgba(17,24,39,.08);
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      font-family:"Pretendard","Noto Sans KR",sans-serif;
+      background:linear-gradient(180deg, #faf8f3 0%, var(--bg) 100%);
+      color:var(--text);
+      line-height:1.5;
+    }
+
+    .page{
+      max-width:1400px;
+      margin:0 auto;
+      padding:28px 20px 72px;
+    }
+
+    .hero,
+    .card{
+      box-shadow:var(--shadow);
+    }
+
+    .hero{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:24px;
+      margin-bottom:22px;
+      padding:28px 32px;
+      background:var(--border-strong);
+      border:0.5px solid var(--border-strong);
+      border-radius:24px;
+      overflow:hidden;
+    }
+
+    .hero__badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      margin-bottom:10px;
+      padding:6px 12px;
+      border:1px solid var(--gold);
+      border-radius:999px;
+      background:linear-gradient(180deg,#fbf6ea,#f1e6cf);
+      color:var(--gold-dark);
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      box-shadow:0 2px 6px rgba(0,0,0,.06);
+    }
+
+    .hero__badge::before{
+      content:"";
+      width:6px;
+      height:6px;
+      border-radius:50%;
+      background:var(--gold-dark);
+      flex:0 0 auto;
+    }
+
+    .hero__title{
+      margin:0;
+      font-size:30px;
+      line-height:1.2;
+      font-weight:800;
+      letter-spacing:-.02em;
+    }
+
+    .hero__meta{
+      margin-top:10px;
+      color:var(--text-sub);
+      font-size:14px;
+    }
+
+    .hero__logo{
+      min-width:220px;
+      display:flex;
+      align-items:center;
+      justify-content:flex-end;
+    }
+
+    .hero__logo img{
+      width:180px;
+      height:auto;
+      object-fit:contain;
+    }
+
+    .card{
+      margin-top:20px;
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:22px;
+      overflow:hidden;
+    }
+
+    .card-header{
+      padding:22px 24px 0;
+    }
+
+    .card-body{
+      padding:22px 24px 24px;
+    }
+
+    .eyebrow{
+      display:inline-block;
+      margin-bottom:8px;
+      color:var(--gold-dark);
+      font-size:12px;
+      font-weight:800;
+      letter-spacing:.12em;
+    }
+
+    .card-title{
+      margin:0;
+      font-size:24px;
+      color:var(--text);
+      letter-spacing:-.02em;
+    }
+
+    .student-grid,
+    .kpi-grid,
+    .double-grid,
+    .triple-grid,
+    .quad-grid{
+      display:grid;
+      gap:14px;
+    }
+
+    .student-grid{grid-template-columns:repeat(6,1fr)}
+    .kpi-grid{grid-template-columns:repeat(5,1fr)}
+    .double-grid{grid-template-columns:repeat(2,1fr)}
+    .triple-grid{grid-template-columns:repeat(3,1fr)}
+    .quad-grid{grid-template-columns:repeat(4,1fr)}
+
+    .subject-meta{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:16px;
+    }
+
+    .subject-chip{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border:1px solid var(--border-strong);
+      border-radius:999px;
+      background:#f6efe2;
+      color:#5c4721;
+      font-size:13px;
+      font-weight:600;
+    }
+
+    .subject-chip span{
+      color:var(--text-sub);
+      font-weight:500;
+    }
+
+    .info-item,
+    .panel,
+    .plan-card,
+    .ai-box{
+      border:1px solid var(--border);
+      border-radius:14px;
+    }
+
+    .info-item{
+      min-height:82px;
+      padding:12px 14px;
+      background:var(--surface-muted);
+    }
+
+    .info-item span{
+      display:block;
+      margin-bottom:8px;
+      color:var(--text-sub);
+      font-size:12px;
+    }
+
+    .info-item strong{
+      display:block;
+      color:var(--text);
+      font-size:16px;
+      font-weight:700;
+    }
+
+
+    .table-wrap{
+      overflow-x:auto;
+    }
+
+    .analysis-table{
+      width:100%;
+      border-collapse:collapse;
+      table-layout:fixed;
+      font-size:13px;
+    }
+
+    .analysis-table th,
+    .analysis-table td{
+      padding:10px 8px;
+      border-bottom:1px solid #efe7d8;
+      text-align:center;
+      vertical-align:middle;
+      white-space:nowrap;
+    }
+
+    .analysis-table th,
+    .analysis-table td{
+      padding:10px 8px;
+      border-bottom:1px solid #efe7d8;
+      text-align:center;
+      vertical-align:middle;
+      white-space:nowrap;
+    }
+
+    .analysis-table thead th{
+      background:#f8f2e6;
+      color:#5a4520;
+      font-size:12px;
+      font-weight:800;
+    }
+
+    .analysis-table th:first-child,
+    .analysis-table th:nth-child(2){
+      text-align:left;
+    }
+
+    .analysis-table .group-cell,
+    .analysis-table .label-cell{
+      text-align:left;
+    }
+
+    .analysis-table .num,
+    .analysis-table .percent,
+    .analysis-table .gap,
+    .analysis-table .reco{
+      text-align:center;
+      font-variant-numeric:tabular-nums;
+    }
+
+    .analysis-table .num{width:56px}
+    .analysis-table .percent,
+    .analysis-table .gap{width:72px}
+    .analysis-table .reco{width:132px}
+
+    .group-cell{
+      color:var(--text-sub);
+      font-weight:700;
+      background:#fcf8f0;
+    }
+
+    .score-cell{display:flex;align-items:center;gap:8px;min-width:140px}
+
+/* position indicator for unit performance */
+.pos-track{position:relative;flex:1;height:8px;background:#ece5da;border-radius:999px}
+.pos-avg{position:absolute;height:100%;left:0;background:linear-gradient(90deg,var(--gold-dark),var(--gold-strong));border-radius:999px}
+.pos-top10{position:absolute;top:-2px;bottom:-2px;width:1px;background:#7a5a22;opacity:.75}
+.pos-star{position:absolute;top:-7px;font-size:12px;color:#222;transform:translateX(-50%)}
+
+.unit-legend{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:12px;color:var(--text-sub);font-size:12px}
+.unit-legend__item{display:inline-flex;align-items:center;gap:6px}
+.unit-legend__bar{width:28px;height:8px;border-radius:999px;background:linear-gradient(90deg,var(--gold-dark),var(--gold-strong))}
+.unit-legend__line{width:1px;height:12px;background:#7a5a22;opacity:.75}
+.unit-legend__star{font-size:12px;color:#222;line-height:1}
+.reco-badge{display:inline-flex;align-items:center;justify-content:center;min-width:48px;padding:4px 8px;border:1px solid var(--border-strong);border-radius:999px;background:#f6efe2;color:#7a5a22;font-size:12px;font-weight:700;margin:2px 4px 2px 0}
+
+    .mini-track{
+      flex:1;
+      height:8px;
+      background:#ece5da;
+      border-radius:999px;
+      overflow:hidden;
+    }
+
+    .mini-fill{
+      height:100%;
+      background:linear-gradient(90deg, var(--gold-dark), var(--gold-strong));
+      border-radius:999px;
+    }
+
+    .gap-neg{color:#a3533a;font-weight:700}
+    .gap-pos{color:#4e6f4e;font-weight:700}
+    .analysis-subgrid{
+      margin-top:14px;
+    }
+
+    
+
+    .plan-card,
+    .ai-box{
+      margin-top:14px;
+    }
+
+    .plan-card,
+    .ai-box{
+      border:1px solid var(--border);
+      border-radius:16px;
+    }
+
+    .info-item{
+      min-height:84px;
+      padding:12px 14px;
+      background:var(--surface-muted);
+    }
+
+    .info-item span{
+      display:block;
+      margin-bottom:8px;
+      color:var(--text-sub);
+      font-size:12px;
+    }
+
+    .info-item strong{
+      display:block;
+      color:var(--text);
+      font-size:16px;
+      font-weight:700;
+    }
+
+    .kpi-card{
+      position:relative;
+      min-height:140px;
+      padding:18px;
+      background:linear-gradient(180deg,#ffffff,#faf6ee);
+      border:1px solid var(--border-strong);
+      border-radius:16px;
+      box-shadow:0 6px 14px rgba(0,0,0,.04);
+      overflow:hidden;
+    }
+
+    .kpi-card::before{
+      content:"";
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      height:4px;
+      background:linear-gradient(90deg,var(--gold-dark),var(--gold));
+    }
+
+    .kpi-card__label{
+      margin-bottom:12px;
+      color:var(--text-sub);
+      font-size:12px;
+    }
+
+    .kpi-card__value{
+      margin-bottom:10px;
+      color:var(--gold-dark);
+      font-size:38px;
+      font-weight:800;
+      line-height:1;
+    }
+
+    .kpi-card__sub{
+      margin-bottom:6px;
+      color:#5c4721;
+      font-size:14px;
+      font-weight:600;
+    }
+
+    .kpi-card__meta{
+      color:var(--text-sub);
+      font-size:13px;
+    }
+
+    .insight-banner{
+      margin-top:16px;
+      padding:16px 18px;
+      background:#fbf5e8;
+      border:1px solid var(--border-strong);
+      border-radius:16px;
+      color:#4c3c1f;
+      font-size:15px;
+    }
+
+    .panel,
+    .plan-card,
+    .ai-box{
+      background:var(--surface);
+    }
+
+    .panel{
+      padding:18px;
+    }
+
+    .panel-title{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:16px;
+    }
+
+    .panel-title h3{
+      margin:0;
+      font-size:18px;
+      letter-spacing:-.01em;
+    }
+
+    .panel-title span{
+      color:var(--gold-dark);
+      font-size:12px;
+      font-weight:700;
+    }
+
+    .metric-list,
+    .issue-list,
+    .multi-bar,
+    .compare-row{
+      display:grid;
+      gap:12px;
+    }
+
+    .metric-row{
+      display:grid;
+      grid-template-columns:96px 1fr 46px;
+      gap:12px;
+      align-items:center;
+    }
+
+    .metric-row label{
+      color:var(--text-sub);
+      font-size:13px;
+    }
+
+    .metric-row strong{
+      color:var(--text);
+      font-size:13px;
+    }
+
+    .bar-track,
+    .fill-wrap{
+      background:#ece5da;
+      border-radius:999px;
+      overflow:hidden;
+    }
+
+    .bar-track{
+      position:relative;
+      height:10px;
+    }
+
+    .bar-fill,
+    .fill{
+      height:100%;
+      border-radius:999px;
+    }
+
+    .bar-fill{
+      background:linear-gradient(90deg, var(--gold-dark), var(--gold-strong));
+    }
+
+    .compare-row{
+      gap:8px;
+      margin-top:14px;
+    }
+
+    .compare-chip,
+    .issue-item,
+    .benchmark-card{
+      padding:10px 12px;
+      background:var(--surface-2);
+      border:1px solid var(--border);
+      border-radius:12px;
+    }
+
+    .compare-chip{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      font-size:13px;
+      color:var(--text);
+    }
+
+    .tag{
+      display:inline-block;
+      padding:4px 8px;
+      border:1px solid var(--border-strong);
+      border-radius:999px;
+      background:#f6efe2;
+      color:#7a5a22;
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:.06em;
+    }
+
+    .issue-item,
+    .benchmark-card{
+      padding:14px;
+      border-radius:14px;
+    }
+
+    .issue-item strong{
+      display:block;
+      margin-bottom:6px;
+      color:var(--text);
+      font-size:15px;
+    }
+
+    .issue-item p{
+      margin:0;
+      color:var(--text-sub);
+      font-size:13px;
+    }
+
+    .benchmark-card:last-child{
+      margin-bottom:0;
+    }
+
+    .benchmark-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:10px;
+      font-size:14px;
+    }
+
+    .benchmark-top strong{
+      font-size:15px;
+    }
+
+    .multi-bar{
+      gap:8px;
+    }
+
+    .multi-bar-line{
+      display:grid;
+      grid-template-columns:86px 1fr 44px;
+      gap:10px;
+      align-items:center;
+      color:var(--text-sub);
+      font-size:12px;
+    }
+
+
+    .multi-bar-line .fill.me{background:linear-gradient(90deg, #80602a, var(--gold))}
+    .multi-bar-line .fill.top{background:linear-gradient(90deg, #6b6f7a, #afb4bc)}
+    .multi-bar-line .fill.one{background:linear-gradient(90deg, #97682f, #f1d39d)}
+
+    .fill-wrap{
+      height:8px;
+    }
+
+    .plan-card{
+      padding:18px;
+    }
+
+    .plan-card h3{
+      margin:0 0 14px;
+      font-size:18px;
+    }
+
+    .plan-card ol,
+    .plan-card ul,
+    .ai-box ul{
+      margin:0;
+      padding-left:18px;
+      color:var(--text);
+    }
+
+    .plan-card li,
+    .ai-box li{
+      margin-bottom:10px;
+    }
+
+    .priority{
+      display:inline-block;
+      margin-left:8px;
+      padding:3px 7px;
+      background:var(--gold-dark);
+      border-radius:999px;
+      color:#fff;
+      font-size:10px;
+      font-weight:800;
+      letter-spacing:.08em;
+      vertical-align:middle;
+    }
+
+    .ai-highlight{
+      margin-bottom:16px;
+      padding:18px 20px;
+      background:#fbf5e8;
+      border-left:4px solid var(--gold);
+      border-radius:16px;
+      color:#4c3c1f;
+      font-size:16px;
+      line-height:1.65;
+    }
+
+    .ai-box{
+      padding:16px;
+    }
+
+    .ai-box h4{
+      margin:0 0 10px;
+      color:var(--gold-dark);
+      font-size:17px;
+    }
+
+    @media (max-width:1200px){
+      .student-grid{grid-template-columns:repeat(4,1fr)}
+      .kpi-grid{grid-template-columns:repeat(3,1fr)}
+      .quad-grid{grid-template-columns:repeat(2,1fr)}
+    }
+
+    @media (max-width:900px){
+      .hero{flex-direction:column}
+      .hero__logo{width:100%;justify-content:flex-start}
+      .kpi-grid,.double-grid,.triple-grid,.quad-grid{grid-template-columns:1fr}
+      .student-grid{grid-template-columns:repeat(2,1fr)}
+    }
+
+    @media (max-width:560px){
+      .page{padding:20px 14px 56px}
+      .hero{padding:22px 18px}
+      .card-header,.card-body{padding-left:18px;padding-right:18px}
+      .student-grid{grid-template-columns:1fr}
+      .metric-row,.multi-bar-line{grid-template-columns:1fr}
+      .hero__title{font-size:28px}
+    }
+
+
+/* ===== OMEGA BLACK 추가 섹션 ===== */
+.black-section-stack{
+  display:grid;
+  gap:20px;
+}
+
+.black-item-meta{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:14px;
+}
+
+.black-item-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 12px;
+  border:1px solid var(--border-strong);
+  border-radius:999px;
+  background:#f8f1e4;
+  color:#5c4721;
+  font-size:13px;
+  font-weight:700;
+}
+
+.black-item-chip span{
+  color:var(--text-sub);
+  font-weight:500;
+}
+
+.black-subtitle{
+  margin:0 0 14px;
+  font-size:18px;
+  font-weight:800;
+  color:var(--text);
+}
+
+.black-item-wrap{
+  overflow-x:auto;
+  border:1px solid var(--border);
+  border-radius:16px;
+  background:#fff;
+}
+
+.black-item-table{
+  width:100%;
+  min-width:1280px;
+  border-collapse:collapse;
+  table-layout:fixed;
+  font-size:12px;
+}
+
+.black-item-table th,
+.black-item-table td{
+  border:1px solid #efe7d8;
+  padding:7px 6px;
+  text-align:center;
+  vertical-align:middle;
+  line-height:1.25;
+  white-space:nowrap;
+}
+
+.black-item-table thead th{
+  background:#f7efdf;
+  color:#5a4520;
+  font-weight:800;
+}
+
+.black-item-table .thead-main{
+  background:linear-gradient(180deg,#7a5522 0%, #5a3e10 100%);
+  color:#fff;
+}
+
+.black-item-table .label{
+  background:#fbf7ef;
+  font-weight:700;
+  color:var(--text);
+}
+
+.black-item-table .left{
+  text-align:left;
+}
+
+.black-item-table .wrong{
+  color:#c62828;
+  font-weight:800;
+}
+
+.black-item-table .low{
+  color:#c62828;
+  font-weight:800;
+}
+
+.black-item-table .muted{
+  color:#8d96a3;
+}
+
+.black-item-table .score-top{
+  background:#fcfaf6;
+  font-weight:700;
+}
+
+.black-factor-box{
+  margin-top:16px;
+  border:1px solid var(--border);
+  border-radius:16px;
+  overflow:hidden;
+  background:#fff;
+}
+
+.black-factor-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:14px 16px;
+  border-bottom:1px solid var(--border);
+  background:#fcfaf6;
+}
+
+.black-factor-head h3{
+  margin:0;
+  font-size:16px;
+  font-weight:800;
+  color:var(--text);
+}
+
+.black-factor-head span{
+  color:var(--text-sub);
+  font-size:12px;
+}
+
+.black-factor-table{
+  width:100%;
+  border-collapse:collapse;
+  table-layout:fixed;
+  font-size:12px;
+}
+
+.black-factor-table th,
+.black-factor-table td{
+  border:1px solid #efe7d8;
+  padding:9px 8px;
+  text-align:center;
+  vertical-align:middle;
+}
+
+.black-factor-table thead th{
+  background:#f7efdf;
+  color:#5a4520;
+  font-weight:800;
+}
+
+.black-factor-table .left{
+  text-align:left;
+}
+
+.black-factor-table .subject-col{
+  background:#fbf7ef;
+  font-weight:800;
+  color:#5a4520;
+  width:84px;
+}
+
+.black-factor-table .achievement-cell{
+  min-width:180px;
+}
+
+.black-factor-track{
+  position:relative;
+  height:12px;
+  border-radius:999px;
+  background:#ece6da;
+  overflow:hidden;
+}
+
+.black-factor-avg{
+  position:absolute;
+  inset:0 auto 0 0;
+  background:linear-gradient(90deg, rgba(200,169,107,.55), rgba(141,107,50,.22));
+}
+
+.black-factor-top10{
+  position:absolute;
+  top:-2px;
+  width:2px;
+  height:16px;
+  background:#9a7a3c;
+}
+
+.black-factor-star{
+  position:absolute;
+  top:50%;
+  transform:translate(-50%, -58%);
+  color:#1f2430;
+  font-size:13px;
+  font-weight:800;
+}
+
+.black-factor-legend{
+  display:flex;
+  flex-wrap:wrap;
+  gap:14px;
+  margin-top:10px;
+  font-size:12px;
+  color:var(--text-sub);
+}
+
+.black-factor-legend__item{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+
+.black-factor-legend__bar{
+  width:22px;
+  height:10px;
+  border-radius:999px;
+  background:linear-gradient(90deg, rgba(200,169,107,.55), rgba(141,107,50,.22));
+}
+
+.black-factor-legend__line{
+  width:2px;
+  height:14px;
+  background:#9a7a3c;
+}
+
+.black-factor-legend__star{
+  font-size:13px;
+  color:#1f2430;
+  font-weight:800;
+}
+
+/* 회차 그래프 */
+.black-trend-box{
+  border:1px solid var(--border);
+  border-radius:18px;
+  overflow:hidden;
+  background:#fff;
+}
+
+.black-trend-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:16px;
+  padding:18px 20px;
+  border-bottom:1px solid var(--border);
+  background:#fcfaf6;
+}
+
+.black-trend-head h3{
+  margin:0;
+  font-size:18px;
+  font-weight:800;
+}
+
+.black-trend-head p{
+  margin:6px 0 0;
+  color:var(--text-sub);
+  font-size:13px;
+}
+
+.black-trend-toggle{
+  display:inline-flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.black-trend-toggle button{
+  border:1px solid var(--border-strong);
+  background:#fff;
+  color:#6f7782;
+  border-radius:999px;
+  padding:7px 12px;
+  font-size:12px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.black-trend-toggle button.is-active{
+  background:linear-gradient(180deg,#7a5522 0%, #5a3e10 100%);
+  border-color:#5a3e10;
+  color:#fff;
+}
+
+.black-trend-body{
+  padding:16px 18px 18px;
+}
+
+.black-trend-legend{
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+  margin-bottom:12px;
+  font-size:12px;
+  color:var(--text-sub);
+}
+
+.black-trend-legend__item{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+
+.black-trend-legend__bar{
+  width:16px;
+  height:12px;
+  border-radius:4px 4px 0 0;
+  background:rgba(160,118,55,.85);
+}
+
+.black-trend-legend__line{
+  width:24px;
+  height:0;
+  border-top:2px dashed var(--gold-strong);
+}
+
+.black-trend-chart-wrap{
+  overflow-x:auto;
+}
+
+.black-trend-chart{
+  min-width:760px;
+}
+
+.black-trend-svg{
+  display:block;
+  width:100%;
+  height:auto;
+}
+
+.black-trend-grid{
+  stroke:#e9e1d5;
+  stroke-width:1;
+}
+
+.black-trend-axis{
+  stroke:#cfbf9e;
+  stroke-width:1.2;
+}
+
+.black-trend-axis-label{
+  fill:#6f7782;
+  font-size:11px;
+}
+
+.black-trend-user-bar{
+  fill:rgba(160,118,55,.85);
+}
+
+.black-trend-user-bar.current{
+  fill:#3d2408;
+}
+
+.black-trend-avg-line{
+  fill:none;
+  stroke:var(--gold-strong);
+  stroke-width:2.2;
+  stroke-dasharray:6 4;
+  stroke-linecap:round;
+}
+
+.black-trend-avg-point{
+  fill:var(--gold-strong);
+  stroke:#fff;
+  stroke-width:2.5;
+}
+
+.black-trend-point-label{
+  fill:#3d2408;
+  font-size:11px;
+  font-weight:800;
+}
+
+.black-trend-empty{
+  fill:#b7ad9e;
+  font-size:10px;
+}
+
+.black-trend-foot{
+  margin-top:10px;
+  font-size:12px;
+  color:var(--text-sub);
+}
+
+/* AI 맞춤 보완 문항 */
+.black-reco-wrap{
+  display:grid;
+  gap:16px;
+}
+
+.black-priority-box{
+  border:1px solid var(--border-strong);
+  border-radius:14px;
+  background:#fcf8ef;
+  padding:14px 16px;
+}
+
+.black-priority-box h3{
+  margin:0 0 8px;
+  font-size:16px;
+  font-weight:800;
+  color:#5a4520;
+}
+
+.black-priority-list{
+  margin:0;
+  padding-left:18px;
+  color:var(--text);
+  font-size:14px;
+  line-height:1.65;
+}
+
+.black-reco-group{
+  border:1px solid var(--border);
+  border-radius:16px;
+  overflow:hidden;
+  background:#fff;
+}
+
+.black-reco-group__head{
+  padding:14px 16px;
+  border-bottom:1px solid var(--border);
+  background:#fcfaf6;
+}
+
+.black-reco-group__head h4{
+  margin:0;
+  font-size:16px;
+  font-weight:800;
+  color:var(--text);
+}
+
+.black-reco-group__head p{
+  margin:6px 0 0;
+  font-size:12px;
+  color:var(--text-sub);
+}
+
+.black-reco-list{
+  padding:14px 16px 16px;
+  display:grid;
+  gap:10px;
+}
+
+.black-reco-item{
+  border:1px solid #efe7d8;
+  border-radius:12px;
+  background:#fffdf9;
+  padding:12px 14px;
+}
+
+.black-reco-item__top{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-bottom:6px;
+}
+
+.black-priority-badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:54px;
+  padding:4px 8px;
+  border-radius:999px;
+  background:linear-gradient(180deg,#7a5522 0%, #5a3e10 100%);
+  color:#fff;
+  font-size:11px;
+  font-weight:800;
+}
+
+.black-source{
+  font-size:13px;
+  font-weight:700;
+  color:var(--text);
+}
+
+.black-reason{
+  font-size:13px;
+  color:var(--text-sub);
+  line-height:1.55;
+}
+
+@media (max-width: 1100px){
+  .black-factor-table,
+  .black-item-table{
+    min-width:980px;
+  }
+}
+
+@media (max-width: 900px){
+  .black-trend-head{
+    display:block;
+  }
+
+  .black-trend-toggle{
+    margin-top:12px;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div class="hero__content">
+        <span class="hero__badge">1등급을 넘어 만점을 위한</span>
+        <h1 class="hero__title">OMEGA Black 모의고사 성적 리포트</h1>
+        <div class="hero__meta">2026년 3월 OMEGA Black 1회차 · 시행일 2026.03.17</div>
+      </div>
+      <div class="hero__logo">
+        <img src="data:image/png;base64,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" alt="megastudy 로고">
+      </div>
+    </header>
+
+    <section class="card">
+      <div class="card-header">
+        <span class="eyebrow">STUDENT PROFILE</span>
+        <h2 class="card-title">학생 기본정보</h2>
+      </div>
+      <div class="card-body">
+        <div class="student-grid">
+          <div class="info-item"><span>학교</span><strong>메가고등학교</strong></div>
+          <div class="info-item"><span>수험번호</span><strong>250604-1032</strong></div>
+          <div class="info-item"><span>학년</span><strong>고3</strong></div>
+          <div class="info-item"><span>계열</span><strong>자연</strong></div>
+          <div class="info-item"><span>성별</span><strong>남</strong></div>
+          <div class="info-item"><span>이름</span><strong>홍길동</strong></div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="card">
+      <div class="card-header">
+        <span class="eyebrow">KEY DIAGNOSTIC</span>
+        <h2 class="card-title">과목 핵심 진단</h2>
+      </div>
+      <div class="card-body">
+        <div class="subject-meta">
+          <div class="subject-chip"><span>응시 과목</span> 수학</div>
+          <div class="subject-chip"><span>선택 과목</span> 미적분</div>
+        </div>
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-card__label">원점수</div>
+            <div class="kpi-card__value">84</div>
+            <div class="kpi-card__sub">30문항 중 26문항 정답</div>
+            <div class="kpi-card__meta">오답 4문항 · 총 배점 손실 16점</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-card__label">백분위</div>
+            <div class="kpi-card__value">92</div>
+            <div class="kpi-card__sub">전국 응시자 기준 상위 8%</div>
+            <div class="kpi-card__meta">1등급 기준 백분위 96 · 현재 4 차이</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-card__label">상위 비율</div>
+            <div class="kpi-card__value">8%</div>
+            <div class="kpi-card__sub">미적분 선택과목 응시자 기준</div>
+            <div class="kpi-card__meta">동일 선택과목 석차 125 / 560</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-card__label">1등급 경계</div>
+            <div class="kpi-card__value">-3점</div>
+            <div class="kpi-card__sub">1등급 기준점 87점 · 현재 84점</div>
+            <div class="kpi-card__meta">배점 3점 이상 오답 문항 1개 정답 시 도달</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-card__label">집단 내 위치</div>
+            <div class="kpi-card__value">12%</div>
+            <div class="kpi-card__sub">미적분 응시자 기준</div>
+            <div class="kpi-card__meta">학교 내 5 / 29 · 전국 1,204 / 7,991</div>
+          </div>
+        </div>
+        <div class="insight-banner">
+<strong style="color:var(--gold-strong)">· 성적 분석 ·</strong><br>
+전국 응시자 기준 백분위 92, 상위 8%에 위치합니다.
+학교 내 석차 5 / 29, 전국 석차 1,204 / 7,991이며,
+미적분 선택과목 응시자 기준으로는 125 / 560에 해당합니다.<br>
+1등급 기준점까지 <strong>3점 차이</strong>로, 오답 4문항 중 배점 3점 이상 문항 1개를 추가 정답 처리할 경우 도달 가능한 구간입니다.
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-header">
+        <span class="eyebrow">DEEP ANALYSIS</span>
+        <h2 class="card-title">과목 심층 분석</h2>
+      </div>
+      <div class="card-body">
+        <div class="double-grid">
+          <div class="panel">
+            <div class="panel-title"><h3>단원별 분석</h3><span>Unit Analysis</span></div>
+            <div class="table-wrap">
+              <table class="analysis-table unit-table">
+                <colgroup>
+                  <col style="width:66px">
+                  <col style="width:160px">
+                  <col style="width:56px">
+                  <col style="width:56px">
+                  <col style="width:170px">
+                  <col style="width:132px">
+                </colgroup>
+                <thead>
+                  <tr>
+                    <th>구분</th>
+                    <th>단원</th>
+                    <th class="num">출제</th>
+                    <th class="num">정답</th>
+                    <th>성취도</th>
+                    <th class="reco">추천 학습 문항</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="group-cell" rowspan="3">수학Ⅰ</td>
+                    <td class="label-cell">지수함수와 로그함수</td>
+                    <td class="num">3</td>
+                    <td class="num">3</td>
+                    <td>
+                      <div class="score-cell"><div class="pos-track"><div class="pos-avg" style="width:92%"></div><span class="pos-top10" style="left:92%"></span><span class="pos-star" style="left:100%">★</span></div></div>
+                    </td>
+                    <td class="reco"></td>
+                  </tr>
+                  <tr>
+                    <td class="label-cell">삼각함수</td>
+                    <td class="num">3</td>
+                    <td class="num">2</td>
+                    <td>
+                      <div class="score-cell"><div class="pos-track"><div class="pos-avg" style="width:88%"></div><span class="pos-top10" style="left:88%"></span><span class="pos-star" style="left:67%">★</span></div></div>
+                    </td>
+                    <td class="reco"><span class="reco-badge">8번</span><span class="reco-badge">10번</span></td>
+                  </tr>
+                  <tr>
+                    <td class="label-cell">수열</td>
+                    <td class="num">5</td>
+                    <td class="num">4</td>
+                    <td>
+                      <div class="score-cell"><div class="pos-track"><div class="pos-avg" style="width:85%"></div><span class="pos-top10" style="left:85%"></span><span class="pos-star" style="left:80%">★</span></div></div>
+                    </td>
+                    <td class="reco"><span class="reco-badge">14번</span></td>
+                  </tr>
+                  <tr>
+                    <td class="group-cell" rowspan="2">수학Ⅱ</td>
+                    <td class="label-cell">함수의 극한과 연속</td>
+                    <td class="num">3</td>
+                    <td class="num">3</td>
+                    <td>
+                      <div class="score-cell"><div class="pos-track"><div class="pos-avg" style="width:92%"></div><span class="pos-top10" style="left:92%"></span><span class="pos-star" style="left:100%">★</span></div></div>
+                    </td>
+                    <td class="reco"></td>
+                  </tr>
+                  <tr>
+                    <td class="label-cell">다항함수의 미분법</td>
+                    <td class="num">4</td>
+                    <td class="num">4</td>
+                    <td>
+                      <div class="score-cell"><div class="pos-track"><div class="pos-avg" style="width:92%"></div><span class="pos-top10" style="left:92%"></span><span class="pos-star" style="left:100%">★</span></div></div>
+                    </td>
+                    <td class="reco"></td>
+                  </tr>
+                  <tr>
+                    <td class="group-cell" rowspan="3">미적분</td>
+                    <td class="label-cell">다항함수의 적분법</td>
+                    <td class="num">4</td>
+                    <td class="num">3</td>
+                    <td>
+                      <div class="score-cell"><div class="pos-track"><div class="pos-avg" style="width:89%"></div><span class="pos-top10" style="left:89%"></span><span class="pos-star" style="left:75%">★</span></div></div>
+                    </td>
+                    <td class="reco"><span class="reco-badge">24번</span><span class="reco-badge">26번</span></td>
+                  </tr>
+                  <tr>
+                    <td class="label-cell">수열의 극한</td>
+                    <td class="num">3</td>
+                    <td class="num">2</td>
+                    <td>
+                      <div class="score-cell"><div class="pos-track"><div class="pos-avg" style="width:88%"></div><span class="pos-top10" style="left:88%"></span><span class="pos-star" style="left:67%">★</span></div></div>
+                    </td>
+                    <td class="reco"><span class="reco-badge">28번</span><span class="reco-badge">29번</span></td>
+                  </tr>
+                  <tr>
+                    <td class="label-cell">미분법</td>
+                    <td class="num">5</td>
+                    <td class="num">4</td>
+                    <td>
+                      <div class="score-cell"><div class="pos-track"><div class="pos-avg" style="width:85%"></div><span class="pos-top10" style="left:85%"></span><span class="pos-star" style="left:80%">★</span></div></div>
+                    </td>
+                    <td class="reco"><span class="reco-badge">30번</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            
+          </div>
+
+          <div class="panel">
+              <div class="panel-title"><h3>평가요소별 분석</h3><span>Competency Analysis</span></div>
+              <div class="table-wrap">
+                <table class="analysis-table competency-table">
+                  <colgroup>
+                    <col style="width:120px">
+                    <col style="width:56px">
+                    <col style="width:56px">
+                    <col style="width:170px">
+                    <col style="width:132px">
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th>평가요소</th>
+                      <th class="num">출제</th>
+                      <th class="num">정답</th>
+                      <th>성취도</th>
+                      <th class="reco">추천 학습 문항</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="label-cell">계산영역</td>
+                      <td class="num">9</td>
+                      <td class="num">8</td>
+                      <td>
+                        <div class="score-cell"><div class="pos-track"><div class="pos-avg" style="width:93%"></div><span class="pos-top10" style="left:93%"></span><span class="pos-star" style="left:89%">★</span></div></div>
+                      </td>
+                      <td class="reco"><span class="reco-badge">14번</span></td>
+                    </tr>
+                    <tr>
+                      <td class="label-cell">이해력</td>
+                      <td class="num">14</td>
+                      <td class="num">12</td>
+                      <td>
+                        <div class="score-cell"><div class="pos-track"><div class="pos-avg" style="width:90%"></div><span class="pos-top10" style="left:90%"></span><span class="pos-star" style="left:86%">★</span></div></div>
+                      </td>
+                      <td class="reco"><span class="reco-badge">18번</span><span class="reco-badge">21번</span></td>
+                    </tr>
+                    <tr>
+                      <td class="label-cell">문제해결</td>
+                      <td class="num">6</td>
+                      <td class="num">3</td>
+                      <td>
+                        <div class="score-cell"><div class="pos-track"><div class="pos-avg" style="width:78%"></div><span class="pos-top10" style="left:78%"></span><span class="pos-star" style="left:50%">★</span></div></div>
+                      </td>
+                      <td class="reco"><span class="reco-badge">22번</span><span class="reco-badge">24번</span></td>
+                    </tr>
+                    <tr>
+                      <td class="label-cell">추론</td>
+                      <td class="num">1</td>
+                      <td class="num">0</td>
+                      <td>
+                        <div class="score-cell"><div class="pos-track"><div class="pos-avg" style="width:65%"></div><span class="pos-top10" style="left:65%"></span><span class="pos-star" style="left:0%">★</span></div></div>
+                      </td>
+                      <td class="reco"><span class="reco-badge">29번</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="unit-legend">
+                <span class="unit-legend__item"><span class="unit-legend__bar"></span> 응시생 평균</span>
+                <span class="unit-legend__item"><span class="unit-legend__line"></span> 상위 10% 기준선</span>
+                <span class="unit-legend__item"><span class="unit-legend__star">★</span> 내 위치</span>
+              </div>
+              <div style="margin-top:6px;color:var(--text-sub);font-size:12px;">
+                ※ 추천 학습 문항 : 틀린 문항 중 정답률이 높은 문항으로, 다시 풀어보며 풀이 접근과 계산 과정을 점검해야 할 문항입니다.<br>성취도가 높은 경우 추천 문항이 없을 수 있습니다.
+              </div>
+            </div>
+          </div>
+      </div>
+    </section>
+
+
+    <section class="card">
+      <div class="card-header">
+        <span class="eyebrow">AI REVIEW</span>
+        <h2 class="card-title">AI 전략 총평</h2>
+      </div>
+      <div class="card-body">
+        <div class="ai-highlight">
+          평가요소별로 보면 계산영역(8 / 9)과 이해력(12 / 14)은 응시생 평균을 상회하는 정답률을 보인 반면,
+          문제해결(3 / 6)과 추론(0 / 1)에서 평균 대비 낮은 정답률이 나타났습니다.
+          특히 오답 4문항이 모두 미적분 선택과목 단원에 집중되어 있으며, 공통과목(수학Ⅰ · 수학Ⅱ) 단원에서는 오답이 발생하지 않았습니다.<br><br>
+          오답 문항의 성격을 구분해서 보면, 22번(20.9%) · 29번(18.8%) · 30번(8.8%)은 전국 정답률 21% 이하의 고난도 문항으로
+          해당 구간에서의 오답은 응시자 다수에게 공통적으로 나타나는 결과입니다.
+          반면 <strong style="color:var(--gold-strong)">15번(전국 정답률 45.0%)은 상대적으로 정답률이 높은 문항에서 발생한 오답</strong>으로,
+          나머지 3문항과는 성격이 다릅니다.<br><br>
+          이 두 가지 오답 유형은 학습 접근 방식을 달리할 필요가 있습니다.
+          고난도 3문항(22 · 29 · 30번)은 해당 단원의 심화 문항에 대한 반복 훈련이 필요한 구간이며,
+          15번은 동일 유형의 문항을 다시 검토하는 것만으로도 점수 회복 가능성이 높은 구간입니다.
+        </div>
+      </div>
+    </section>
+
+<!-- 문항·평가요소 분석 -->
+<section class="card">
+  <div class="card-header">
+    <span class="eyebrow">ITEM & FACTOR ANALYSIS</span>
+    <h2 class="card-title">문항·평가요소 분석</h2>
+  </div>
+  <div class="card-body">
+    <div class="black-item-meta">
+      <span class="black-item-chip">과목 <strong>수학</strong></span>
+      <span class="black-item-chip">선택과목 <strong>미적분</strong></span>
+      <span class="black-item-chip">총 문항 <strong>30문항</strong></span>
+      <span class="black-item-chip">정답 <strong>26문항</strong></span>
+      <span class="black-item-chip">오답 <strong>4문항</strong></span>
+    </div>
+
+    <div class="black-item-wrap">
+      <table class="black-item-table">
+        <colgroup>
+          <col style="width:72px">
+          <col style="width:72px">
+          <col style="width:72px">
+          <col style="width:72px">
+          <col style="width:64px">
+          <col style="width:56px">
+          <col style="width:76px">
+          <col style="width:88px">
+          <col style="width:100px">
+          <col style="width:72px">
+          <col style="width:64px">
+          <col style="width:56px">
+          <col style="width:120px">
+        </colgroup>
+        <thead>
+          <tr>
+            <th class="thead-main" colspan="3">원점수</th>
+            <th class="thead-main" colspan="6">실제 응시 기준 성적</th>
+            <th class="thead-main" colspan="4">수능 예상 성적</th>
+          </tr>
+          <tr>
+            <th rowspan="2">공통과목</th>
+            <th rowspan="2">선택과목</th>
+            <th rowspan="2">전체</th>
+            <th rowspan="2">표준점수</th>
+            <th rowspan="2">백분위</th>
+            <th rowspan="2">등급</th>
+            <th colspan="3">석차</th>
+            <th rowspan="2">표준점수</th>
+            <th rowspan="2">백분위</th>
+            <th rowspan="2">등급</th>
+            <th rowspan="2">전국 예상 석차</th>
+          </tr>
+          <tr>
+            <th>학급</th>
+            <th>학교</th>
+            <th>전국</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="score-top">
+            <td>66</td>
+            <td>14</td>
+            <td>80</td>
+            <td>118</td>
+            <td>85</td>
+            <td>3</td>
+            <td>5 / 29</td>
+            <td>125 / 560</td>
+            <td>1204 / 7991</td>
+            <td>133</td>
+            <td>95</td>
+            <td>2</td>
+            <td>27363 / 496411</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="black-item-wrap" style="margin-top:14px;">
+      <table class="black-item-table">
+        <colgroup>
+          <col style="width:52px">
+          <col style="width:150px">
+          <col style="width:98px">
+          <col style="width:52px">
+          <col style="width:46px">
+          <col style="width:64px">
+          <col style="width:52px">
+          <col style="width:72px">
+          <col style="width:64px">
+          <col style="width:64px">
+          <col style="width:64px">
+          <col style="width:64px">
+        </colgroup>
+        <thead>
+          <tr>
+            <th class="thead-main">문항</th>
+            <th class="thead-main">단원</th>
+            <th class="thead-main">평가요소</th>
+            <th class="thead-main">배점</th>
+            <th class="thead-main">정답</th>
+            <th class="thead-main">최초 답안</th>
+            <th class="thead-main">채점</th>
+            <th class="thead-main">가장 빈번한 선택</th>
+            <th class="thead-main">정답률<br>전국</th>
+            <th class="thead-main">1등급</th>
+            <th class="thead-main">2등급</th>
+            <th class="thead-main">3등급</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td class="left">지수함수와 로그함수</td><td>계산영역</td><td>2</td><td>2</td><td>2</td><td>O</td><td>5</td><td>96</td><td>100</td><td>99.4</td><td>98.8</td></tr>
+          <tr><td>2</td><td class="left">다항함수의 미분법</td><td>계산영역</td><td>2</td><td>3</td><td>3</td><td>O</td><td>1</td><td>97.9</td><td>99.7</td><td>99.8</td><td>99.5</td></tr>
+          <tr><td>3</td><td class="left">수열</td><td>계산영역</td><td>3</td><td>1</td><td>1</td><td>O</td><td>3</td><td>87.4</td><td>99.7</td><td>98.9</td><td>99.5</td></tr>
+          <tr><td>4</td><td class="left">함수의 극한과 연속</td><td>계산영역</td><td>2</td><td>4</td><td>4</td><td>O</td><td>3</td><td>97.2</td><td>100</td><td>99.8</td><td>99.9</td></tr>
+          <tr><td>5</td><td class="left">다항함수의 미분법</td><td>계산영역</td><td>3</td><td>5</td><td>5</td><td>O</td><td>4</td><td>97.8</td><td>100</td><td>100</td><td>99.7</td></tr>
+          <tr><td>6</td><td class="left">수열</td><td>이해력</td><td>3</td><td>3</td><td>3</td><td>O</td><td>4</td><td>94.5</td><td>99.4</td><td>99.7</td><td>99.2</td></tr>
+          <tr><td>7</td><td class="left">삼각함수</td><td>이해력</td><td>3</td><td>1</td><td>1</td><td>O</td><td>5</td><td>93.8</td><td>100</td><td>99.7</td><td>99.0</td></tr>
+          <tr><td>8</td><td class="left">함수의 극한과 연속</td><td>이해력</td><td>3</td><td>5</td><td>5</td><td>O</td><td>3</td><td>80.6</td><td>98.5</td><td>95.5</td><td>90.7</td></tr>
+          <tr><td>9</td><td class="left">삼각함수</td><td>이해력</td><td>4</td><td>1</td><td>1</td><td>O</td><td>2</td><td>82.1</td><td>99.7</td><td>99.4</td><td>99.2</td></tr>
+          <tr><td>10</td><td class="left">다항함수의 적분법</td><td>이해력</td><td>4</td><td>3</td><td>3</td><td>O</td><td>4</td><td>81.0</td><td>99.1</td><td>99.1</td><td>97.7</td></tr>
+          <tr><td>11</td><td class="left">다항함수의 미분법</td><td>이해력</td><td>3</td><td>2</td><td>2</td><td>O</td><td>4</td><td>71.8</td><td>99.7</td><td>98.8</td><td>97.3</td></tr>
+          <tr><td>12</td><td class="left">수열</td><td>이해력</td><td>4</td><td>4</td><td>4</td><td>O</td><td>3</td><td>67.9</td><td>98.2</td><td>96.4</td><td>93.4</td></tr>
+          <tr><td>13</td><td class="left">다항함수의 미분법</td><td>문제해결</td><td>4</td><td>5</td><td>5</td><td>O</td><td>4</td><td>60.0</td><td>99.7</td><td>98.6</td><td>96.6</td></tr>
+          <tr><td>14</td><td class="left">지수함수와 로그함수</td><td>문제해결</td><td>4</td><td>2</td><td>2</td><td>O</td><td>4</td><td>40.8</td><td>97.6</td><td>83.6</td><td>70.0</td></tr>
+          <tr><td>15</td><td class="left">다항함수의 적분법</td><td>문제해결</td><td>4</td><td>4</td><td>5</td><td class="wrong">X</td><td>2</td><td>45.0</td><td>94.5</td><td>74.5</td><td>58.3</td></tr>
+          <tr><td>16</td><td class="left">지수함수와 로그함수</td><td>계산영역</td><td>3</td><td>10</td><td>10</td><td>O</td><td>-</td><td>95.8</td><td>99.7</td><td>99.2</td><td>98.9</td></tr>
+          <tr><td>17</td><td class="left">다항함수의 적분법</td><td>계산영역</td><td>3</td><td>4</td><td>4</td><td>O</td><td>4</td><td>97.5</td><td>99.7</td><td>100</td><td>99.6</td></tr>
+          <tr><td>18</td><td class="left">수열</td><td>이해력</td><td>3</td><td>30</td><td>30</td><td>O</td><td>1</td><td>93.3</td><td>99.4</td><td>98.4</td><td>94.0</td></tr>
+          <tr><td>19</td><td class="left">다항함수의 적분법</td><td>이해력</td><td>3</td><td>5</td><td>5</td><td>O</td><td>2</td><td>60.1</td><td>97.0</td><td>96.0</td><td>91.4</td></tr>
+          <tr><td>20</td><td class="left">삼각함수</td><td>이해력</td><td>4</td><td>24</td><td>24</td><td>O</td><td>-</td><td>40.2</td><td>95.7</td><td>90.3</td><td>78.3</td></tr>
+          <tr><td>21</td><td class="left">함수의 극한과 연속</td><td>문제해결</td><td>4</td><td>2</td><td>2</td><td>O</td><td>4</td><td class="low">16.4</td><td>93.6</td><td>60.9</td><td>32.3</td></tr>
+          <tr><td>22</td><td class="left">수열</td><td>추론</td><td>4</td><td>17</td><td>13</td><td class="wrong">X</td><td>-</td><td class="low">20.9</td><td>85.4</td><td>62.5</td><td>42.2</td></tr>
+          <tr><td>23</td><td class="left">미분법</td><td>계산영역</td><td>2</td><td>2</td><td>2</td><td>O</td><td>3</td><td>98.2</td><td>100</td><td>100</td><td>99.9</td></tr>
+          <tr><td>24</td><td class="left">수열의 극한</td><td>계산영역</td><td>3</td><td>3</td><td>3</td><td>O</td><td>5</td><td>86.8</td><td>95.1</td><td>92.8</td><td>92.0</td></tr>
+          <tr><td>25</td><td class="left">미분법</td><td>이해력</td><td>3</td><td>5</td><td>5</td><td>O</td><td>4</td><td>89.2</td><td>99.7</td><td>99.7</td><td>98.3</td></tr>
+          <tr><td>26</td><td class="left">수열의 극한</td><td>이해력</td><td>3</td><td>4</td><td>4</td><td>O</td><td>1</td><td>86.1</td><td>99.7</td><td>98.5</td><td>96.8</td></tr>
+          <tr><td>27</td><td class="left">미분법</td><td>이해력</td><td>3</td><td>1</td><td>1</td><td>O</td><td>2</td><td>43.7</td><td>90.1</td><td>73.9</td><td>53.0</td></tr>
+          <tr><td>28</td><td class="left">미분법</td><td>문제해결</td><td>4</td><td>5</td><td>5</td><td>O</td><td>4</td><td>41.5</td><td>86.4</td><td>60.1</td><td>53.8</td></tr>
+          <tr><td>29</td><td class="left">미분법</td><td>이해력</td><td>4</td><td>8</td><td>10</td><td class="wrong">X</td><td>-</td><td class="low">18.8</td><td>91.0</td><td>50.7</td><td>25.2</td></tr>
+          <tr><td>30</td><td class="left">수열의 극한</td><td>문제해결</td><td>4</td><td>16</td><td>18</td><td class="wrong">X</td><td>-</td><td class="low">8.8</td><td>61.4</td><td>20.2</td><td>6.1</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</section>
+
+<!-- 회차별 성적 추이 -->
+<section class="card">
+  <div class="card-header">
+    <span class="eyebrow">SCORE TREND</span>
+    <h2 class="card-title">회차별 성적 추이</h2>
+  </div>
+  <div class="card-body">
+    <div class="black-trend-box"
+         data-default-metric="raw"
+         data-raw='[73,75,74,76,77,75,76,80,null,null,null,null,null,null,null,null]'
+         data-raw-avg='[71,72,71,73,74,73,74,75,null,null,null,null,null,null,null,null]'
+         data-percentile='[78,80,79,82,83,81,82,85,null,null,null,null,null,null,null,null]'
+         data-percentile-avg='[72,73,72,74,75,74,75,76,null,null,null,null,null,null,null,null]'
+         data-grade='[4,4,4,3,3,3,3,3,null,null,null,null,null,null,null,null]'
+         data-grade-avg='[4,4,4,4,4,4,4,4,null,null,null,null,null,null,null,null]'>
+      <div class="black-trend-head">
+        <div>
+          <h3>회차별 나의 성적 추이</h3>
+          <p>기본값은 원점수이며, 미응시 회차는 빈칸으로 표시됩니다.</p>
+        </div>
+        <div class="black-trend-toggle">
+          <button type="button" class="is-active" data-metric="raw" onclick="switchBlackTrendMetric(this)">원점수</button>
+          <button type="button" data-metric="percentile" onclick="switchBlackTrendMetric(this)">백분위</button>
+          <button type="button" data-metric="grade" onclick="switchBlackTrendMetric(this)">등급</button>
+        </div>
+      </div>
+
+      <div class="black-trend-body">
+        <div class="black-trend-legend">
+          <span class="black-trend-legend__item"><span class="black-trend-legend__bar"></span> 나의 점수</span>
+          <span class="black-trend-legend__item"><span class="black-trend-legend__line"></span> 응시생 평균</span>
+        </div>
+
+        <div class="black-trend-chart-wrap">
+          <div class="black-trend-chart">
+            <svg class="black-trend-svg" viewBox="0 0 820 250" preserveAspectRatio="none"></svg>
+          </div>
+        </div>
+
+        <div class="black-trend-foot" data-black-trend-note>
+          최근 3회 기준 안정적인 상승 흐름이 유지되고 있습니다.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AI 맞춤 보완 문항 -->
+<section class="card">
+  <div class="card-header">
+    <span class="eyebrow">AI RECOMMENDATION</span>
+    <h2 class="card-title">AI 맞춤 보완 문항</h2>
+  </div>
+  <div class="card-body">
+    <div class="black-reco-wrap">
+      <div class="black-priority-box">
+        <h3>학습 우선순위</h3>
+        <ol class="black-priority-list">
+          <li>미분법·수열의 극한 고난도 문제해결 안정화</li>
+          <li>추론 문항 접근 방식 보완</li>
+          <li>정답률이 높은 계산/이해 문항 실수 방지</li>
+        </ol>
+      </div>
+
+      <div class="black-reco-group">
+        <div class="black-reco-group__head">
+          <h4>문제해결 보완</h4>
+          <p>최근 시험에서 고난도 문제해결 문항의 정답률이 평균 대비 낮게 나타난 구간입니다.</p>
+        </div>
+        <div class="black-reco-list">
+          <div class="black-reco-item">
+            <div class="black-reco-item__top">
+              <span class="black-priority-badge">1순위</span>
+              <span class="black-source">2024학년도 9월 평가원 모의고사 · 수학 미적분 · 30번</span>
+            </div>
+            <div class="black-reason">30번과 유사한 고난도 수열의 극한 문제. 최근 2회 연속 최상위 난도 문항에서 오답이 반복되어 우선 보완이 필요합니다.</div>
+          </div>
+
+          <div class="black-reco-item">
+            <div class="black-reco-item__top">
+              <span class="black-priority-badge">2순위</span>
+              <span class="black-source">OMEGA Black 2026 3월 · 수학 · 29번</span>
+            </div>
+            <div class="black-reason">문제해결형 미분법 문항. 정답률이 상대적으로 높은데도 오답으로 연결되어 풀이 접근 점검용으로 적합합니다.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="black-reco-group">
+        <div class="black-reco-group__head">
+          <h4>추론 보완</h4>
+          <p>평가요소 분석에서 가장 취약하게 나타난 추론 영역 보완용 문항입니다.</p>
+        </div>
+        <div class="black-reco-list">
+          <div class="black-reco-item">
+            <div class="black-reco-item__top">
+              <span class="black-priority-badge">3순위</span>
+              <span class="black-source">2023학년도 수능 · 수학 미적분 · 22번</span>
+            </div>
+            <div class="black-reason">22번과 유사한 추론 중심 문항. 추론 요소는 출제 수는 적지만 점수 손실 영향이 커서 단기 보완 효과가 큽니다.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="black-reco-group">
+        <div class="black-reco-group__head">
+          <h4>실수 방지 보완</h4>
+          <p>정답률이 높은 문항에서 발생한 오답은 단기 회복 가능성이 높은 점수 구간입니다.</p>
+        </div>
+        <div class="black-reco-list">
+          <div class="black-reco-item">
+            <div class="black-reco-item__top">
+              <span class="black-priority-badge">4순위</span>
+              <span class="black-source">OMEGA 2026 2회 · 수학 · 15번</span>
+            </div>
+            <div class="black-reason">정답률이 높은 적분법 문항인데 오답 처리된 사례와 유사합니다. 계산 과정 및 선지 검토 루틴 점검용으로 추천합니다.</div>
+          </div>
+
+          <div class="black-reco-item">
+            <div class="black-reco-item__top">
+              <span class="black-priority-badge">5순위</span>
+              <span class="black-source">2022학년도 6월 평가원 모의고사 · 수학 · 21번</span>
+            </div>
+            <div class="black-reason">함수의 극한과 연속 단원 고정 실수 보완용 문항. 접근은 맞지만 계산에서 흔들리는 패턴을 바로잡는 데 적합합니다.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  </div>
+
+<script>
+function switchBlackTrendMetric(button){
+  const box = button.closest('.black-trend-box');
+  const metric = button.dataset.metric;
+
+  box.querySelectorAll('.black-trend-toggle button').forEach(btn => {
+    btn.classList.toggle('is-active', btn === button);
+  });
+
+  renderBlackTrendChart(box, metric);
+}
+
+function initBlackTrendCharts(){
+  document.querySelectorAll('.black-trend-box').forEach(box => {
+    const defaultMetric = box.dataset.defaultMetric || 'raw';
+    renderBlackTrendChart(box, defaultMetric);
+  });
+}
+
+function renderBlackTrendChart(box, metric){
+  const svg = box.querySelector('.black-trend-svg');
+  const note = box.querySelector('[data-black-trend-note]');
+
+  const rawData = JSON.parse(box.dataset.raw || '[]');
+  const percentileData = JSON.parse(box.dataset.percentile || '[]');
+  const gradeData = JSON.parse(box.dataset.grade || '[]');
+
+  const rawAvgData = JSON.parse(box.dataset.rawAvg || '[]');
+  const percentileAvgData = JSON.parse(box.dataset.percentileAvg || '[]');
+  const gradeAvgData = JSON.parse(box.dataset.gradeAvg || '[]');
+
+  let data = rawData;
+  let avgData = rawAvgData;
+  let yMin = 0;
+  let yMax = 100;
+  let yTicks = [0, 20, 40, 60, 80, 100];
+  let metricLabel = '원점수';
+  let reverse = false;
+
+  if (metric === 'percentile'){
+    data = percentileData;
+    avgData = percentileAvgData;
+    yMin = 0;
+    yMax = 100;
+    yTicks = [0, 20, 40, 60, 80, 100];
+    metricLabel = '백분위';
+    note.textContent = '현재 기준: 백분위 · 평균 대비 우위를 함께 확인할 수 있습니다.';
+  } else if (metric === 'grade'){
+    data = gradeData;
+    avgData = gradeAvgData;
+    yMin = 1;
+    yMax = 9;
+    yTicks = [1, 3, 5, 7, 9];
+    metricLabel = '등급';
+    reverse = true; // 1등급이 위로 오도록
+    note.textContent = '현재 기준: 등급 · 등급은 숫자가 낮을수록 우수한 성취를 의미합니다.';
+  } else {
+    const valid = data.filter(v => v !== null && v !== undefined);
+    const maxVal = valid.length ? Math.max(...valid) : 100;
+    yMin = 0;
+    yMax = Math.max(100, Math.ceil(maxVal / 10) * 10);
+    yTicks = [];
+    const step = yMax / 5;
+    for (let i = 0; i <= 5; i++) yTicks.push(Math.round(step * i));
+    metricLabel = '원점수';
+    note.textContent = '현재 기준: 원점수 · 최근 3회 기준 안정적인 상승 흐름이 유지되고 있습니다.';
+  }
+
+  const width = 820;
+  const height = 250;
+  const margin = { top: 18, right: 24, bottom: 48, left: 44 };
+  const plotStartX = 88;
+  const chartW = width - plotStartX - margin.right;
+  const chartH = height - margin.top - margin.bottom;
+  const xStep = chartW / 15;
+
+  function getY(value){
+    if (value === null || value === undefined || Number.isNaN(value)) return null;
+
+    if (reverse){
+      const ratio = (value - yMin) / (yMax - yMin);
+      return margin.top + ratio * chartH;
+    } else {
+      const ratio = (value - yMin) / (yMax - yMin);
+      return margin.top + chartH - ratio * chartH;
+    }
+  }
+
+  function buildSegments(values){
+    const segments = [];
+    let current = [];
+
+    values.forEach((value, i) => {
+      if (value === null || value === undefined) {
+        if (current.length) {
+          segments.push(current);
+          current = [];
+        }
+        return;
+      }
+
+      const x = plotStartX + xStep * i;
+      const y = getY(value);
+      current.push({ x, y, value, index: i });
+    });
+
+    if (current.length) segments.push(current);
+    return segments;
+  }
+
+  function pathFromPoints(points){
+    return points.map((p, idx) => `${idx === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ');
+  }
+
+  const validPoints = data
+    .map((value, i) => value === null || value === undefined ? null : ({
+      x: plotStartX + xStep * i,
+      y: getY(value),
+      value,
+      index: i
+    }))
+    .filter(Boolean);
+
+  const avgValidPoints = avgData
+    .map((value, i) => value === null || value === undefined ? null : ({
+      x: plotStartX + xStep * i,
+      y: getY(value),
+      value,
+      index: i
+    }))
+    .filter(Boolean);
+
+  const lastPoint = validPoints.length ? validPoints[validPoints.length - 1] : null;
+  const avgSegments = buildSegments(avgData);
+
+  let svgParts = [];
+
+  yTicks.forEach(tick => {
+    const y = getY(tick);
+    svgParts.push(`<line class="black-trend-grid" x1="${plotStartX}" y1="${y}" x2="${width - margin.right}" y2="${y}"></line>`);
+    svgParts.push(`<text class="black-trend-axis-label" x="${plotStartX - 14}" y="${y + 4}" text-anchor="end">${tick}</text>`);
+  });
+
+  svgParts.push(`<line class="black-trend-axis" x1="${plotStartX}" y1="${margin.top + chartH}" x2="${width - margin.right}" y2="${margin.top + chartH}"></line>`);
+
+  for (let i = 0; i < 16; i++) {
+    const x = plotStartX + xStep * i;
+    svgParts.push(`<text class="black-trend-axis-label" x="${x}" y="${height - 14}" text-anchor="middle">${i + 1}회</text>`);
+  }
+
+  const barWidth = 22;
+  const baseY = margin.top + chartH;
+
+  validPoints.forEach(point => {
+    const isCurrent = lastPoint && point.index === lastPoint.index;
+    const barHeight = baseY - point.y;
+    const barClass = isCurrent ? 'black-trend-user-bar current' : 'black-trend-user-bar';
+    svgParts.push(`<rect class="${barClass}" x="${point.x - barWidth / 2}" y="${point.y}" width="${barWidth}" height="${barHeight}" rx="4" ry="4"></rect>`);
+  });
+
+  avgSegments.forEach(seg => {
+    svgParts.push(`<path class="black-trend-avg-line" d="${pathFromPoints(seg)}"></path>`);
+  });
+
+  avgValidPoints.forEach(point => {
+    svgParts.push(`<circle class="black-trend-avg-point" cx="${point.x}" cy="${point.y}" r="4"></circle>`);
+  });
+
+  validPoints.forEach(point => {
+    svgParts.push(`<text class="black-trend-point-label" x="${point.x}" y="${point.y - 10}" text-anchor="middle">${point.value}</text>`);
+  });
+
+  for (let i = 0; i < 16; i++) {
+    if (data[i] === null || data[i] === undefined) {
+      const x = plotStartX + xStep * i;
+      svgParts.push(`<text class="black-trend-empty" x="${x}" y="${margin.top + chartH - 8}" text-anchor="middle">-</text>`);
+    }
+  }
+
+  svg.innerHTML = svgParts.join('');
+}
+
+window.addEventListener('DOMContentLoaded', initBlackTrendCharts);
+</script>
+
+</body>
+</html>
