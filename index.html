@@ -212,7 +212,7 @@
     .sim-chart-row{display:grid;grid-template-columns:168px 1fr;align-items:center;gap:16px}
     .sim-chart-label{font-size:14px;color:#48556a;font-weight:700}
     .sim-chart-label.curr{font-weight:800;color:#243852}
-    .sim-chart-track{position:relative;height:22px;border-radius:999px;background:linear-gradient(180deg,#f3f7fc 0%,#eef4fb 100%);overflow:visible}  /* [FIX 2] padding-right 제거: JS에서 BADGE_SPACE로 일관 처리 */
+    .sim-chart-track{position:relative;height:22px;border-radius:999px;background:linear-gradient(180deg,#f3f7fc 0%,#eef4fb 100%);padding-right: 160px;overflow:visible}  /* [FIX 2] padding-right 제거: JS에서 BADGE_SPACE로 일관 처리 */
     .sim-chart-track::before{content:"";position:absolute;inset:0;border-radius:999px;background:repeating-linear-gradient(to right,rgba(15,42,82,.05) 0,rgba(15,42,82,.05) 1px,transparent 1px,transparent calc(16.666% - 1px),rgba(15,42,82,.05) calc(16.666% - 1px),rgba(15,42,82,.05) 16.666%);pointer-events:none}
     .sim-chart-fill{position:absolute;left:0;top:5px;height:12px;border-radius:999px;box-shadow:0 2px 8px rgba(31,64,120,.12)}
     .sim-chart-fill.curr{background:linear-gradient(90deg,#cfd5df 0%,#b8c2cf 100%)}
@@ -226,8 +226,22 @@
     .sim-chart-badge{display:inline-flex;align-items:center;justify-content:center;height:24px;padding:0 10px;border-radius:999px;font-size:11px;font-weight:800}
     .sim-chart-badge.grade{border:1px solid #f0c457;background:#fff7df;color:#d28d0b}
     .sim-chart-badge.top{border:1px solid #9dbbf1;background:#edf4ff;color:#336fce}
-    .sim-axis{position:relative;margin-left:184px;margin-top:16px;padding-top:14px;border-top:1px solid #dfe6ef;display:flex;justify-content:space-between}
-    .sim-axis span{position:relative;font-size:12px;color:#697588}
+/* ① 축 레이블을 absolute로 전환 — 기존 코드 교체 */
+.sim-axis {
+  position: relative;
+  margin-left: 184px;
+  margin-top: 16px;
+  padding-top: 14px;
+  height: 20px; 
+  border-top: 1px solid #dfe6ef;
+  /* justify-content: space-between 제거 */
+}
+.sim-axis span {
+  position: absolute;
+  transform: translateX(-50%);   /* 텍스트 중앙이 정확한 눈금 위치에 오도록 */
+  font-size: 12px;
+  color: #697588;
+}
     .sim-axis-note{position:absolute;top:-10px;transform:translateX(-50%);font-size:11px;color:#2f4f84;font-weight:800;white-space:nowrap;background:#fff;border:1px solid #d7e3f3;border-radius:999px;padding:2px 8px;box-shadow:0 2px 8px rgba(15,42,82,.06);z-index:3}
     .sim-chart-legend{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:14px;font-size:12px;color:#6b7280}
     .sim-chart-legend__item{display:inline-flex;align-items:center;gap:6px}
@@ -470,7 +484,13 @@
                 <div class="sim-chart-marker" data-sim-grade-marker></div>
                 <div class="sim-chart-rows" data-sim-bar-list></div>
                 <div class="sim-axis">
-                  <span>80</span><span>84</span><span>88</span><span>92</span><span>96</span><span>100</span>
+                  <!-- 수정: left 값은 widthPct(값) 와 동일한 공식 (값-80)/20*100% -->
+<span style="left:0%">80</span>
+<span style="left:20%">84</span>
+<span style="left:40%">88</span>
+<span style="left:60%">92</span>
+<span style="left:80%">96</span>
+<span style="left:100%">100</span>
                   <div class="sim-axis-note" data-sim-axis-note>96</div>
                 </div>
               </div>
@@ -694,9 +714,7 @@
             // fill 너비: 배지가 있으면 트랙의 (100% - BADGE_SPACE)까지만 허용
             // CSS에서 padding-right를 제거했으므로 calc() 없이 % 단위로 처리 가능
             // 단, 정확한 픽셀 제한을 위해 max-width style 인라인으로 추가
-            const fillStyle = hasBadge
-              ? `width:${width}%; max-width:calc(100% - ${BADGE_SPACE}px);`
-              : `width:${width}%;`;
+            const fillStyle = `width:${width}%;`;
 
             // [FIX 2] idx=0, idx=1 모두 translateY(-50%)로 수직 중앙 정렬
             // CSS .sim-chart-value에 기본 transform:translateY(-50%) 추가했으므로
@@ -708,7 +726,7 @@
             } else if (hasBadge) {
               // [FIX 4] 예상 백분위 + 배지: 막대 끝에서 텍스트를 왼쪽으로 붙임
               // max-width 제한된 fill 끝 근처에 텍스트 배치
-              valueStyle = `left:calc(min(${width}%, calc(100% - ${BADGE_SPACE}px)) - 8px); transform:translate(-100%, -50%);`;
+              valueStyle = `left:calc(${width}% - 8px); transform:translate(-100%, -50%);`;
             } else {
               // [FIX 5] 예상 백분위, 배지 없음: 막대 끝 바로 뒤
               valueStyle = `left:calc(${width}% + 8px);`;
@@ -743,7 +761,8 @@
             const trackRect = firstTrack.getBoundingClientRect();
 
             // curr 행은 배지 공간 차감 없이 전체 트랙 너비 기준
-            const usableTrackWidth = trackRect.width;
+            const BADGE_SPACE = 160; // CSS padding-right와 동일값
+const usableTrackWidth = trackRect.width
             const rawMarkerLeftInChart =
               (trackRect.left - chartRect.left) + (usableTrackWidth * markerPct / 100);
 
@@ -755,13 +774,14 @@
 
             el.axisNote.textContent = `${gradeLine}`;
             const rawMarkerLeftInAxis =
-              (trackRect.left - axisRect.left) + (usableTrackWidth * markerPct / 100);
+              (trackRect.left - chartRect.left) + (usableTrackWidth * markerPct / 100) - (axisRect.left - chartRect.left)
 
             const noteHalf = el.axisNote.offsetWidth / 2;
-            const safeNoteLeftInAxis = Math.min(
-              Math.max(rawMarkerLeftInAxis, noteHalf + 4),
-              axisRect.width - noteHalf - 4
-            );
+           // 수정: 클램핑 범위를 usableTrackWidth 기준으로 교체
+const safeNoteLeftInAxis = Math.min(
+  Math.max(rawMarkerLeftInAxis, noteHalf + 4),
+  usableTrackWidth - noteHalf - 4  // ← 트랙 너비 기준으로 교체
+);
             el.axisNote.style.left = `${safeNoteLeftInAxis}px`;
           });
         }
